@@ -95,6 +95,7 @@ public class GUIv2 {
 		panelCont.setLayout(cl);
 		screen = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setSize(screen);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		createBaseMenu();
