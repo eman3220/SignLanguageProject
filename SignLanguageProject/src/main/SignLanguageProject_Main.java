@@ -18,8 +18,17 @@ public class SignLanguageProject_Main {
 		System.out.println("Setting up the back end...");
 		
 		// not doing much at the moment...
+		setupSigns();
 		
 		System.out.println("Back end setup complete");
+	}
+
+	private static void setupSigns() {
+		// create a signGesture
+		
+		// create signs related to signGesture
+		
+		
 	}
 
 	private static void setupFront() {

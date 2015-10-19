@@ -3,7 +3,8 @@ package back;
 import java.util.ArrayList;
 
 public abstract class SignGesture {
-	private ArrayList<Sign> associatedSigns;
+	private String name;
+	private ArrayList<Sign> associatedSigns = new ArrayList<Sign>();
 	
 	/**
 	 * Needs to have the following information.
@@ -20,4 +21,22 @@ public abstract class SignGesture {
 	 * @return
 	 */
 	public abstract boolean matchesCondition(String[] handData);
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public ArrayList<Sign> getAssociatedSigns() {
+		return associatedSigns;
+	}
+
+	public void setAssociatedSigns(ArrayList<Sign> associatedSigns) {
+		this.associatedSigns = associatedSigns;
+	}
+	
+	
 }
