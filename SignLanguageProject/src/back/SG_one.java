@@ -1,5 +1,12 @@
 package back;
 
-public class SG_one {
+public class SG_one extends SignGesture{
+
+	@Override
+	public boolean matchesCondition(String[] handData) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 }
