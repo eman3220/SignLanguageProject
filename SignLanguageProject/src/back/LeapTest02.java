@@ -91,7 +91,7 @@ class SampleListener extends Listener {
 
 	public void onFrame(Controller controller) {
 		// System.out.println("Frame available");
-		//System.out.println("onFrame");
+		// System.out.println("onFrame");
 		Frame frame = controller.frame();
 
 		// System.out.println("Frame id: " + frame.id() + ", timestamp: "

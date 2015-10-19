@@ -9,27 +9,27 @@ public class SignLanguageProject_Main {
 
 	public static void main(String[] args) {
 		System.out.println("This is for Scotty's presentation");
-		//setupBack();
+		setupBack();
 		setupFront();
 		
 	}
 
 	private static void setupBack() {
-		System.out.println("Setting up back end...");
+		System.out.println("Setting up the back end...");
 		
-		// TODO check if leap is working
-		//new LeapTest02();
-		
+		// not doing much at the moment...
 		
 		System.out.println("Back end setup complete");
 	}
 
 	private static void setupFront() {
+		System.out.println("Setting up the front end...");
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					GUIv2 window = new GUIv2();
 					window.frame.setVisible(true);
+					System.out.println("Front end setup complete");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
