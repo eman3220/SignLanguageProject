@@ -27,7 +27,7 @@ import javax.swing.UIManager;
 
 public class GUIv2 {
 
-	JFrame frame = new JFrame("NZSL Virtual Classroom");
+	public JFrame frame = new JFrame("NZSL Virtual Classroom");
 	
 	JPanel panelCont = new JPanel();
 	JPanel baseMenu = new JPanel();
