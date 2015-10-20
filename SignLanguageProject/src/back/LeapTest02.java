@@ -159,6 +159,57 @@ class SampleListener extends Listener {
 					// System.out.println("finger list>>>>: "+hand.fingers().get(2).type());
 					// System.out.println("Finger Type:"+finger_type);
 
+					String[] handInfo = new String[3];
+
+					// sphere diameter
+					handInfo[0] = sphere_diameter+"";
+
+					// fingers presented
+					StringBuilder fingersPresent = new StringBuilder();
+					if (fingers.contains(Type.TYPE_THUMB)) {
+						fingersPresent.append("1");
+					} else {
+						fingersPresent.append("0");
+					}
+
+					if (fingers.contains(Type.TYPE_INDEX)) {
+						fingersPresent.append("1");
+					} else {
+						fingersPresent.append("0");
+					}
+
+					if (fingers.contains(Type.TYPE_MIDDLE)) {
+						fingersPresent.append("1");
+					} else {
+						fingersPresent.append("0");
+					}
+
+					if (fingers.contains(Type.TYPE_RING)) {
+						fingersPresent.append("1");
+					} else {
+						fingersPresent.append("0");
+					}
+
+					if (fingers.contains(Type.TYPE_PINKY)) {
+						fingersPresent.append("1");
+					} else {
+						fingersPresent.append("0");
+					}
+
+					handInfo[1] = fingersPresent.toString();
+
+					// distances
+					StringBuilder spaceBetween = new StringBuilder();
+					// if distance between thumb distal and index distal is less than threshold, 1 else 0
+					//hands.get(0).finger(0).bone()
+					// if distance between index distal and middle distal is less than threshold, 1 else 0
+					// if distance between middle distal and ring distal is less than threshold, 1 else 0
+					// if distance between ring distal and pinky distal is less than threshold, 1 else 0
+
+					handInfo[2] = spaceBetween.toString();
+
+					// classification
+
 					System.out.println();
 					// C gesture
 					if (sphere_diameter > 80 && sphere_diameter < 110
@@ -197,6 +248,9 @@ class SampleListener extends Listener {
 							&& fingerCount == 5) {
 						System.out.println("this is a 5 gesture");
 						GUIv2.log("this is a 5 gesture");
+					}else{
+						System.out.println("I don't know what this is");
+						GUIv2.log("I don't know what this is");
 					}
 
 					handData.add(bone.center().getX());

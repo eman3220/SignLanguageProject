@@ -212,7 +212,7 @@ public class GUIv2 {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(panelCont, "searchMenu");
-				
+
 				// start using leap
 				Thread t = new Thread(){
 					@Override
@@ -224,7 +224,7 @@ public class GUIv2 {
 				};
 				t.start();
 				System.out.println("Past thread start");
-				
+
 			}
 		});
 		buttonExit.addActionListener(new ActionListener() {
@@ -318,9 +318,9 @@ public class GUIv2 {
 		log("Search by sign initialisation complete");
 		log("Welcome");
 		log("");
-		
+
 	}
-	
+
 	public static void log(String message){
 		leapConsole.append(message+"\n");
 		JScrollBar vertical = sp.getVerticalScrollBar();

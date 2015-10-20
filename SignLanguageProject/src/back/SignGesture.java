@@ -5,15 +5,10 @@ import java.util.ArrayList;
 public abstract class SignGesture {
 	private String name;
 	private ArrayList<Sign> associatedSigns = new ArrayList<Sign>();
-	
+
 	/**
 	 * Needs to have the following information.
-	 * Finger count
-	 * thumb presented
-	 * index presented
-	 * middle presented
-	 * ring presented
-	 * pinky presented
+	 * fingers presented
 	 * thumb-index distal distance
 	 * index-middle distal distance
 	 * middle-ring distal distance
@@ -37,6 +32,6 @@ public abstract class SignGesture {
 	public void setAssociatedSigns(ArrayList<Sign> associatedSigns) {
 		this.associatedSigns = associatedSigns;
 	}
-	
-	
+
+
 }
