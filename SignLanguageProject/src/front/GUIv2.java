@@ -103,7 +103,8 @@ public class GUIv2 {
 	private void initialize() {
 		panelCont.setLayout(cl);
 		screen = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-		frame.setSize(screen);
+		//frame.setSize(screen);
+		frame.setSize(1920, 1080);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
