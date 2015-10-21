@@ -103,10 +103,13 @@ public class GUIv2 {
 	private void initialize() {
 		panelCont.setLayout(cl);
 		screen = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-		//frame.setSize(screen);
-		frame.setSize(1920, 1080);
+		if(screen.width>1800){
+			frame.setSize(1920, 1080);
+		}else{
+			frame.setSize(screen);
+		}
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		createBaseMenu();
 		createNumeracyMenu();
