@@ -36,9 +36,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
+import back.LeapController;
 import back.LeapTest02;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+//import javafx.scene.media.Media;
+//import javafx.scene.media.MediaPlayer;
 
 public class GUIv2 {
 
@@ -268,8 +269,8 @@ public class GUIv2 {
 					@Override
 					public void run(){
 						System.out.println("THREAD STARTED");
-						LeapTest02.initialise();
-						LeapTest02.classify();
+						LeapController.initialise();
+						LeapController.classify();
 					}
 				};
 				t.start();
@@ -472,7 +473,7 @@ public class GUIv2 {
 	}
 	
 	public static void log(String message){
-		leapConsole.append(message+"\n");
+		leapConsole.append(message);
 		JScrollBar vertical = sp.getVerticalScrollBar();
 		vertical.setValue( vertical.getMaximum() );
 	}
