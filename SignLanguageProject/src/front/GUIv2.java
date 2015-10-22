@@ -132,8 +132,12 @@ public class GUIv2 {
 	private void initialize() {
 		panelCont.setLayout(cl);
 		screen = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+		if(screen.getWidth()>1850){
+			screen = new Dimension(1920, 1080);
+		}
 		frame.setSize(screen);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//BaseMenu baseMenu = new BaseMenu();
 		
