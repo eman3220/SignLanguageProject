@@ -178,28 +178,28 @@ class LeapListener extends Listener {
 		//System.out.println("Finger spacing: "+fingersSpaced.toString());
 		// classification
 		//System.out.println("Classifying");
-		
+
 		GUIv2.log(handInfo[1]+" ");
 		GUIv2.log(handInfo[2]+" ");
-		
+
 		SG_C letterC = (SG_C) SignLanguageProject_Main.signGestures.get(5);
 		GUIv2.log(letterC.matchesCondition(handInfo)+" ");
-		
+
 		SG_connectedHand connectedHand = (SG_connectedHand) SignLanguageProject_Main.signGestures
 				.get(6);
 		GUIv2.log(connectedHand.matchesCondition(handInfo)+" ");
-		
+
 		SG_connectedIndexMiddle connectedIndexMiddle = (SG_connectedIndexMiddle) SignLanguageProject_Main.signGestures
 				.get(7);
 		GUIv2.log(connectedIndexMiddle.matchesCondition(handInfo)+" ");
-		
+
 		SG_one one = (SG_one) SignLanguageProject_Main.signGestures.get(0);
 		GUIv2.log(one.matchesCondition(handInfo) + " ");
 
 		SG_two two = (SG_two) SignLanguageProject_Main.signGestures.get(1);
 		GUIv2.log(two.matchesCondition(handInfo) + " ");
 
-		SG_three three = (SG_three) SignLanguageProject_Main.signGestures
+		SG_three_v1 three = (SG_three_v1) SignLanguageProject_Main.signGestures
 				.get(2);
 		GUIv2.log(three.matchesCondition(handInfo) + " ");
 
@@ -209,8 +209,43 @@ class LeapListener extends Listener {
 		SG_five five = (SG_five) SignLanguageProject_Main.signGestures.get(4);
 		GUIv2.log(five.matchesCondition(handInfo)+" ");
 
+		if(letterC.matchesCondition(handInfo)){
+
+		}else if(connectedHand.matchesCondition(handInfo)){
+
+		}else if(connectedIndexMiddle.matchesCondition(handInfo)){
+
+		}else if(one.matchesCondition(handInfo)){
+
+		}else if(two.matchesCondition(handInfo)){
+
+		}else if(three.matchesCondition(handInfo)){
+
+		}else if(four.matchesCondition(handInfo)){
+
+		}else if(five.matchesCondition(handInfo)){
+
+//		}
+//		else if(six.matchesCondition(handInfo)){
+//
+//		}else if(seven.matchesCondition(handInfo)){
+//
+//		}else if(nine.matchesCondition(handInfo)){
+//
+//		}else if(){
+//
+//		}else if(){
+//
+//		}else if(){
+//
+//		}else if(){
+
+		}else{
+			// unused
+		}
+
 		GUIv2.log("\n");
-		
+
 		//System.out.println("end");
 	}
 
