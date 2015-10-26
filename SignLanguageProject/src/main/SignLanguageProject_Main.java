@@ -3,7 +3,6 @@ package main;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 
-import back.LeapTest02;
 import back.SG_C;
 import back.SG_connectedHand;
 import back.SG_connectedIndexMiddle;

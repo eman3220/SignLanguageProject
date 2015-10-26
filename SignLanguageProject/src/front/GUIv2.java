@@ -50,7 +50,7 @@ public class GUIv2 {
 	JPanel numeracyMenu = new JPanel();
 	JPanel exerciseMenu = new JPanel();
 	JPanel searchMenu = new JPanel();
-	
+
 	JButton buttonNumeracy = makeButton("Numeracy Basics");
 	JButton buttonExercises = makeButton("Exercises");
 	JButton buttonSearch = makeButton("Search by Sign");
@@ -67,6 +67,19 @@ public class GUIv2 {
 	JButton buttonHomeSearch = makeBack();
 	JButton buttonHelpSearch = makeHelp();
 
+	// fingerExtensionIndicator
+	public static JLabel THUMB;
+	public static JLabel INDEX;
+	public static JLabel MIDDLE;
+	public static JLabel RING;
+	public static JLabel PINKY;
+
+	// fingerSpacingIndicator;
+	public static JLabel T_I;
+	public static JLabel I_M;
+	public static JLabel M_R;
+	public static JLabel R_P;
+
 	static JTextArea leapConsole = makeConsole();
 	static JScrollPane sp;
 
@@ -81,11 +94,11 @@ public class GUIv2 {
 
 	JComboBox refine = makeComboBox();
 	int refineValue;
-	
+
 	JTextField number = makeTextField();
-	
+
 	Image image;
-	
+
 	BufferedImage titleImage;
 	BufferedImage background;
 
@@ -139,9 +152,9 @@ public class GUIv2 {
 		frame.setSize(screen);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		//BaseMenu baseMenu = new BaseMenu();
-		
+
 		createBaseMenu();
 		createNumeracyMenu();
 		createExerciseMenu();
@@ -151,11 +164,11 @@ public class GUIv2 {
 		panelCont.add(numeracyMenu, "numeracyMenu");
 		panelCont.add(exerciseMenu, "exerciseMenu");
 		panelCont.add(searchMenu, "searchMenu");
-		
+
 		cl.show(panelCont, "baseMenu");
 
 		frame.add(panelCont);
-		
+
 		//draw drawObject = new draw();
 		//baseMenu.add(drawObject);
 	}
@@ -187,7 +200,7 @@ public class GUIv2 {
 		jb.setContentAreaFilled(false);
 		return jb;
 	}
-	
+
 	//Makes icon combobox
     public JComboBox makeComboBox(){
     	JComboBox cb;
@@ -201,7 +214,7 @@ public class GUIv2 {
         cb = new JComboBox( items );
         return cb;
     }
-    
+
     //Makes text input field
     public JTextField makeTextField(){
     	JTextField tf = new JTextField("0");
@@ -211,7 +224,7 @@ public class GUIv2 {
 		tf.setBackground(new Color(0, 0, 0, 0));
 		tf.setBorder(null);
 		return tf;
-    	
+
     }
 
 	// Makes a button for help
@@ -252,7 +265,7 @@ public class GUIv2 {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(panelCont, "numeracyMenu");
 			}
-		});		
+		});
 		buttonExercises.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0){
@@ -263,7 +276,7 @@ public class GUIv2 {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(panelCont, "searchMenu");
-				
+
 				// start using leap
 				Thread t = new Thread(){
 					@Override
@@ -275,7 +288,7 @@ public class GUIv2 {
 				};
 				t.start();
 				System.out.println("Past thread start");
-				
+
 			}
 		});
 		buttonExit.addActionListener(new ActionListener() {
@@ -337,45 +350,45 @@ public class GUIv2 {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(panelCont, "baseMenu");
 			}
-		});		
+		});
 		buttonExercisesNumeracy.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0){
 				cl.show(panelCont, "exerciseMenu");
 			}
-		});		
+		});
 		add.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0){
 				System.out.println("Display 'add' video.");
 			}
-		});	
+		});
 		subtract.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0){
 				System.out.println("Display 'subtract' video.");
 			}
-		});	
+		});
 		multiply.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0){
 				System.out.println("Display 'multiply' video.");
 			}
-		});	
+		});
 		divide.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0){
 				System.out.println("Display 'divide' video.");
 			}
-		});	
+		});
 		equals.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0){
 				System.out.println("Display 'equals' video.");
 			}
-		});	
+		});
 	}
-	
+
 	//Makes the Exercises menu panel
 	private void createExerciseMenu(){
 		//Layout
@@ -439,12 +452,69 @@ public class GUIv2 {
 		searchMenu.add(refine);
 		refine.setBounds(30, frame.getHeight() / 2 - 100, 200, 200);
 		refineValue = refine.getSelectedIndex();
+
+		// fingerExtensionIndicator
+		int fei_y = 200;
+		int fei_width = 100;
+		int fei_height = 100;
+		THUMB = new JLabel("THUMB");
+		THUMB.setBounds(1*(frame.getWidth()/6), fei_y, fei_width, fei_height);
+		THUMB.setText("THUMB");
+		INDEX = new JLabel("INDEX");
+		INDEX.setBounds(2*(frame.getWidth()/6), fei_y, fei_width, fei_height);
+		INDEX.setText("INDEX");
+		MIDDLE = new JLabel("MIDDLE");
+		MIDDLE.setBounds(3*(frame.getWidth()/6), fei_y, fei_width, fei_height);
+		MIDDLE.setText("MIDDLE");
+		RING = new JLabel("RING");
+		RING.setBounds(4*(frame.getWidth()/6), fei_y, fei_width, fei_height);
+		RING.setText("RING");
+		PINKY = new JLabel("PINKY");
+		PINKY.setBounds(5*(frame.getWidth()/6), fei_y, fei_width, fei_height);
+		PINKY.setText("PINKY");
+
+		searchMenu.add(THUMB);
+		searchMenu.add(INDEX);
+		searchMenu.add(MIDDLE);
+		searchMenu.add(RING);
+		searchMenu.add(PINKY);
+
+		// fingerSpacingIndicator
+		int fsi_y = 250;
+		int fsi_width = 100;
+		int fsi_height = 100;
+
+		T_I = new JLabel();
+		T_I.setBounds(1*(frame.getWidth()/5), fsi_y, fsi_width, fsi_height);
+		T_I.setText("SPACE");
+
+		I_M = new JLabel();
+		I_M.setBounds(2*(frame.getWidth()/5), fsi_y, fsi_width, fsi_height);
+		I_M.setText("SPACE");
+
+		M_R = new JLabel();
+		M_R.setBounds(3*(frame.getWidth()/5), fsi_y, fsi_width, fsi_height);
+		M_R.setText("SPACE");
+
+		R_P = new JLabel();
+		R_P.setBounds(4*(frame.getWidth()/5), fsi_y, fsi_width, fsi_height);
+		R_P.setText("SPACE");
+
+		searchMenu.add(T_I);
+		searchMenu.add(I_M);
+		searchMenu.add(M_R);
+		searchMenu.add(R_P);
+
+
+
 		// Console
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		leapConsole.setBorder(border);
 		sp = new JScrollPane(leapConsole);
-		sp.setBounds(frame.getWidth() / 4, frame.getHeight() / 4, 900, 400);
+		//sp.setBounds(frame.getWidth() / 4, frame.getHeight() / 4, 900, 400);
+		sp.setBounds(frame.getWidth() / 4, frame.getHeight()-100, 900, 90);
 		searchMenu.add(sp);
+
 		// Background
 		searchMenu.setBackground(Color.WHITE);
 		// Button functionality
@@ -469,9 +539,9 @@ public class GUIv2 {
 		log("Search by sign initialisation complete");
 		log("Welcome");
 		log("");
-		
+
 	}
-	
+
 	public static void log(String message){
 		leapConsole.append(message);
 		JScrollBar vertical = sp.getVerticalScrollBar();
