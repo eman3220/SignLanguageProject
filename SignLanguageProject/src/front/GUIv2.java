@@ -61,14 +61,10 @@ public class GUIv2 {
 	JComboBox refine = makeComboBox();
 	int refineValue;
 
-	JTextField number = makeTextField();
 
 	Image exerciseHelp, searchHelp;
 
 	Dimension screen;
-
-	// Media media;
-	// MediaPlayer mediaPlayer;
 
 	boolean exerciseHelpVisible = false;
 	boolean searchHelpVisible = false;
@@ -111,8 +107,6 @@ public class GUIv2 {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		// BaseMenu baseMenu = new BaseMenu();
-
 		createBaseMenu();
 		createNumberMenu();
 		createExerciseMenu();
@@ -143,47 +137,18 @@ public class GUIv2 {
 		return jb;
 	}
 
-	// Makes a button for returning to the prior screen
-	public JButton makeBack() {
-		JButton jb = new JButton();
-		jb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/button - backV2.png")));
-		jb.setBorderPainted(false);
-		jb.setFocusPainted(false);
-		jb.setContentAreaFilled(false);
-		return jb;
-	}
-
 	// Makes icon combobox
 	public JComboBox makeComboBox() {
 		JComboBox cb;
-		Object[] items = { new ImageIcon(getClass().getResource("/Assets/location_anywhere.png")),
+		Object[] items =
+		{
+				new ImageIcon(getClass().getResource("/Assets/location_anywhere.png")),
 				new ImageIcon(getClass().getResource("/Assets/location_ears.png")),
 				new ImageIcon(getClass().getResource("/Assets/location_in_front_of_body.png")),
-				new ImageIcon(getClass().getResource("/Assets/location_top_of_head.png")) };
+				new ImageIcon(getClass().getResource("/Assets/location_top_of_head.png"))
+				};
 		cb = new JComboBox(items);
 		return cb;
-	}
-
-	// Makes text input field
-	public JTextField makeTextField() {
-		JTextField tf = new JTextField("0");
-		tf.setFont(new Font("OREGON LDO LIGHT", Font.PLAIN, 28));
-		tf.setOpaque(false);
-		tf.setForeground(new Color(219, 229, 229, 255));
-		tf.setBackground(new Color(0, 0, 0, 0));
-		tf.setBorder(null);
-		return tf;
-
-	}
-
-	// Makes a button for help
-	public JButton makeHelp() {
-		JButton jb = new JButton();
-		jb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/button - help.png")));
-		jb.setBorderPainted(false);
-		jb.setFocusPainted(false);
-		jb.setContentAreaFilled(false);
-		return jb;
 	}
 
 	private static JTextArea makeConsole() {

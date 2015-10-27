@@ -1,14 +1,13 @@
 package back;
 
-public class SG_two extends SignGesture{
+public class SG_three_v1 extends SignGesture {
 
 	@Override
 	public boolean matchesCondition(String[] handData) {
-		if (handData[1].equals("01100") && handData[2].split("")[1].equals("1")) {
+		if (handData[1].equals("11100")){
 			return true;
 		}
 		return false;
 	}
-
 
 }

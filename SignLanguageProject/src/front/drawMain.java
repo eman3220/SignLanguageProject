@@ -36,9 +36,9 @@ public class drawMain extends JPanel implements ActionListener {
 
 		tY = 0 - (ht / 2);
 		sbsX = 0 - (wd / 4);
-		nY = ht + (ht / 8 * 3);
-		erY = ht + (ht / 4);
-		etX = wd + (wd / 4);
+		nY = ht;
+		erY = ht;
+		etX = wd;
 
 		repaint();
 	}
