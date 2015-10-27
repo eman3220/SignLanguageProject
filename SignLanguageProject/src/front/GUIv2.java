@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -24,83 +25,53 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-//<<<<<<< HEAD
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-//=======
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-//>>>>>>> branch 'master' of https://github.com/eman3220/SignLanguageProject.git
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
 import back.LeapController;
 import back.LeapTest02;
-//import javafx.scene.media.Media;
-//import javafx.scene.media.MediaPlayer;
 
 public class GUIv2 {
 
 	public JFrame frame = new JFrame("NZSL Virtual Classroom");
+	int width, height;
 
 	JPanel panelCont = new JPanel();
 	JPanel baseMenu = new JPanel();
-	JPanel numeracyMenu = new JPanel();
+	JPanel numberMenu = new JPanel();
 	JPanel exerciseMenu = new JPanel();
 	JPanel searchMenu = new JPanel();
-	
-	JButton buttonNumeracy = makeButton("Numeracy Basics");
-	JButton buttonExercises = makeButton("Exercises");
-	JButton buttonSearch = makeButton("Search by Sign");
-	JButton buttonExit = makeButton("Exit");
-	JButton buttonHomeNumeracy = makeBack();
-	JButton buttonExercisesNumeracy = makeButton("Exercises");
-	JButton add = makeBack();
-	JButton subtract = makeBack();
-	JButton multiply = makeBack();
-	JButton divide = makeBack();
-	JButton equals = makeBack();
-	JButton buttonHomeExercises = makeBack();
-	JButton buttonHelpExercises = makeHelp();
-	JButton buttonHomeSearch = makeBack();
-	JButton buttonHelpSearch = makeHelp();
+
+	JButton buttonNumber, buttonExercises, buttonSearch, buttonExit, buttonHomeNumber, buttonExercisesNumber,
+			button0_20, button10_100, add, subtract, multiply, divide, equals, buttonHomeExercises, buttonHelpExercises,
+			buttonHomeSearch, buttonHelpSearch;
 
 	static JTextArea leapConsole = makeConsole();
 	static JScrollPane sp;
 
-	JLabel titleIcon;
-	JLabel numeracyTitleIcon;
-	JLabel exerciseTitleIcon;
-	JLabel searchTitleIcon;
-	JLabel resultsTitleIcon;
-	JLabel textFieldIcon;
-	JLabel helpDialogue;
-	JLabel bg;
+	JLabel titleIcon, numberTitleIcon, exerciseTitleIcon, searchTitleIcon, bg, resultsTitleIcon, textFieldIcon,
+			exerciseHelpDialogue, searchHelpDialogue;
 
 	JComboBox refine = makeComboBox();
 	int refineValue;
-	
+
 	JTextField number = makeTextField();
-	
-	Image image;
-	
-	BufferedImage titleImage;
-	BufferedImage background;
+
+	Image exerciseHelp, searchHelp;
 
 	Dimension screen;
 
-	//Media media;
-	//MediaPlayer mediaPlayer;
+	// Media media;
+	// MediaPlayer mediaPlayer;
 
-	boolean helpVisible = false;
-
-	Color offWhite = new Color(252, 243, 255, 255);
-	Color lightBlue = new Color(219, 229, 229, 255);
-	Color greyBlue = new Color(108, 122, 170, 255);
-	Color midBlue = new Color(51, 34, 153, 255);
-	Color darkBlue = new Color(23, 18, 33, 255);
+	boolean exerciseHelpVisible = false;
+	boolean searchHelpVisible = false;
 
 	CardLayout cl = new CardLayout();
 
@@ -133,48 +104,42 @@ public class GUIv2 {
 	private void initialize() {
 		panelCont.setLayout(cl);
 		screen = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-		if(screen.getWidth()>1850){
+		if (screen.getWidth() > 1850) {
 			screen = new Dimension(1920, 1080);
 		}
 		frame.setSize(screen);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		//BaseMenu baseMenu = new BaseMenu();
-		
+
+		// BaseMenu baseMenu = new BaseMenu();
+
 		createBaseMenu();
-		createNumeracyMenu();
+		createNumberMenu();
 		createExerciseMenu();
 		createSearchMenu();
 
 		panelCont.add(baseMenu, "baseMenu");
-		panelCont.add(numeracyMenu, "numeracyMenu");
+		panelCont.add(numberMenu, "numberMenu");
 		panelCont.add(exerciseMenu, "exerciseMenu");
 		panelCont.add(searchMenu, "searchMenu");
-		
+
 		cl.show(panelCont, "baseMenu");
 
 		frame.add(panelCont);
-		
-		//draw drawObject = new draw();
-		//baseMenu.add(drawObject);
 	}
 
 	// Makes a blank button for navigating the menu
-	public JButton makeButton(String name) {
+	public JButton makeButton(String name, int xPos, int yPos, int wid, int hei) {
 		JButton jb = new JButton(name);
-		jb.setIcon(new javax.swing.ImageIcon(getClass().getResource(
-				"/Assets/button_blank_dark.png")));
+		jb.setLocation(xPos, yPos);
+		jb.setSize(wid, hei);
 		jb.setHorizontalTextPosition(JButton.CENTER);
 		jb.setVerticalTextPosition(JButton.CENTER);
 		jb.setBorderPainted(false);
 		jb.setFocusPainted(false);
 		jb.setContentAreaFilled(false);
-		jb.setForeground(new Color(219, 229, 229, 255)); // for whatever reason
-															// referencing
-															// "lightBlue" was
-															// turning it grey
-		jb.setFont(new Font("OREGON LDO LIGHT", Font.PLAIN, 28));
+		jb.setForeground(new Color(31, 27, 39, 255));
+		jb.setFont(new Font("VANI", Font.BOLD, 48));
 		return jb;
 	}
 
@@ -187,32 +152,29 @@ public class GUIv2 {
 		jb.setContentAreaFilled(false);
 		return jb;
 	}
-	
-	//Makes icon combobox
-    public JComboBox makeComboBox(){
-    	JComboBox cb;
-    	Object[] items =
-    		{
-    			new ImageIcon(getClass().getResource("/Assets/location_anywhere.png")),
-    			new ImageIcon(getClass().getResource("/Assets/location_ears.png")),
-    			new ImageIcon(getClass().getResource("/Assets/location_in_front_of_body.png")),
-    			new ImageIcon(getClass().getResource("/Assets/location_top_of_head.png"))
-            };
-        cb = new JComboBox( items );
-        return cb;
-    }
-    
-    //Makes text input field
-    public JTextField makeTextField(){
-    	JTextField tf = new JTextField("0");
-    	tf.setFont(new Font("OREGON LDO LIGHT", Font.PLAIN, 28));
-    	tf.setOpaque(false);
-    	tf.setForeground(new Color(219, 229, 229, 255));
+
+	// Makes icon combobox
+	public JComboBox makeComboBox() {
+		JComboBox cb;
+		Object[] items = { new ImageIcon(getClass().getResource("/Assets/location_anywhere.png")),
+				new ImageIcon(getClass().getResource("/Assets/location_ears.png")),
+				new ImageIcon(getClass().getResource("/Assets/location_in_front_of_body.png")),
+				new ImageIcon(getClass().getResource("/Assets/location_top_of_head.png")) };
+		cb = new JComboBox(items);
+		return cb;
+	}
+
+	// Makes text input field
+	public JTextField makeTextField() {
+		JTextField tf = new JTextField("0");
+		tf.setFont(new Font("OREGON LDO LIGHT", Font.PLAIN, 28));
+		tf.setOpaque(false);
+		tf.setForeground(new Color(219, 229, 229, 255));
 		tf.setBackground(new Color(0, 0, 0, 0));
 		tf.setBorder(null);
 		return tf;
-    	
-    }
+
+	}
 
 	// Makes a button for help
 	public JButton makeHelp() {
@@ -229,33 +191,49 @@ public class GUIv2 {
 		return console;
 	}
 
+	// Image scaling code from online
+	// (http://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon)
+	private Image getScaledImage(Image srcImg, int w, int h) {
+		BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2 = resizedImg.createGraphics();
+
+		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g2.drawImage(srcImg, 0, 0, w, h, null);
+		g2.dispose();
+
+		return resizedImg;
+	}
+
 	// Makes the main menu panel
 	private void createBaseMenu() {
 		// Layout
 		baseMenu.setLayout(null);
+		width = frame.getWidth();
+		height = frame.getHeight();
 		// Title
-		titleIcon = new JLabel(new javax.swing.ImageIcon(getClass().getResource("/Assets/title_block.png")));
+		titleIcon = new JLabel(new javax.swing.ImageIcon(getClass().getResource("/Assets/title_block_v4.png")));
 		baseMenu.add(titleIcon);
-		titleIcon.setBounds(frame.getWidth()/2 - 512, 0, 1024, 256);
+		titleIcon.setBounds(width / 2 - 288, 50, 576, 200);
 		// Buttons
-		baseMenu.add(buttonNumeracy);
-		buttonNumeracy.setBounds(frame.getWidth()/2 - 241, frame.getHeight()/20*7, 482, 89);
+		buttonNumber = makeButton("Number", width / 4, height / 8 * 5, width / 4, height / 4);
+		buttonExercises = makeButton("Exercises", width / 2, height / 8 * 5, width / 4, height / 4);
+		buttonSearch = makeButton("Search by Sign", 0, height / 8, width / 4, height / 2);
+		buttonSearch.setText("<html><center>Search<br />by<br />Sign</html>");
+		buttonExit = makeButton("Exit", width / 4 * 3, height / 2, width / 4, height / 4);
+		baseMenu.add(buttonNumber);
 		baseMenu.add(buttonExercises);
-		buttonExercises.setBounds(frame.getWidth()/2 - 241, frame.getHeight()/20*7+100, 482, 89);
 		baseMenu.add(buttonSearch);
-		buttonSearch.setBounds(frame.getWidth()/2 - 241, frame.getHeight()/20*7+200, 482, 89);
 		baseMenu.add(buttonExit);
-		buttonExit.setBounds(frame.getWidth()/2 - 241, frame.getHeight()/20*7+300, 482, 89);
 		// Button functionality
-		buttonNumeracy.addActionListener(new ActionListener() {
+		buttonNumber.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				cl.show(panelCont, "numeracyMenu");
+				cl.show(panelCont, "numberMenu");
 			}
-		});		
+		});
 		buttonExercises.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0){
+			public void actionPerformed(ActionEvent arg0) {
 				cl.show(panelCont, "exerciseMenu");
 			}
 		});
@@ -263,11 +241,11 @@ public class GUIv2 {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(panelCont, "searchMenu");
-				
+
 				// start using leap
-				Thread t = new Thread(){
+				Thread t = new Thread() {
 					@Override
-					public void run(){
+					public void run() {
 						System.out.println("THREAD STARTED");
 						LeapController.initialise();
 						LeapController.classify();
@@ -275,7 +253,7 @@ public class GUIv2 {
 				};
 				t.start();
 				System.out.println("Past thread start");
-				
+
 			}
 		});
 		buttonExit.addActionListener(new ActionListener() {
@@ -284,169 +262,183 @@ public class GUIv2 {
 				frame.dispose();
 			}
 		});
-		draw drawObject = new draw();
-		drawObject.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		drawMain drawObject = new drawMain(width, height);
+		drawObject.setBounds(0, 0, width, height);
 		baseMenu.add(drawObject);
 	}
 
-	// Makes the Numeracy menu panel
-	private void createNumeracyMenu() {
+	// Makes the Number menu panel
+	private void createNumberMenu() {
 		// Layout
-		numeracyMenu.setLayout(null);
+		numberMenu.setLayout(null);
+		width = frame.getWidth();
+		height = frame.getHeight();
 		// Title
-		numeracyTitleIcon = new JLabel(new javax.swing.ImageIcon(getClass()
-				.getResource("/Assets/Title - Numeracy.png")));
-		numeracyMenu.add(numeracyTitleIcon);
-		numeracyTitleIcon.setBounds(frame.getWidth() / 2 - 290,
-				frame.getHeight() / 30, 580, 90);
+		numberTitleIcon = new JLabel(new javax.swing.ImageIcon(getClass().getResource("/Assets/title_number.png")));
+		numberMenu.add(numberTitleIcon);
+		numberTitleIcon.setBounds(width / 2 - 300, 0, 600, 100);
 		// Buttons
-		numeracyMenu.add(buttonHomeNumeracy);
-		buttonHomeNumeracy.setBounds(frame.getHeight()/30, frame.getHeight()/30, 69, 68);
-		numeracyMenu.add(buttonExercisesNumeracy);
-		buttonExercisesNumeracy.setBounds(30, frame.getHeight()/2+50, 482, 89);
-		numeracyMenu.add(add);
-		add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/button_add.png")));
-		add.setBounds(30, frame.getHeight()/2-50, 88, 88);
-		numeracyMenu.add(subtract);
-		subtract.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/button_subtract.png")));
-		subtract.setBounds(128, frame.getHeight()/2-50, 88, 88);
-		numeracyMenu.add(multiply);
-		multiply.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/button_multiply.png")));
-		multiply.setBounds(226, frame.getHeight()/2-50, 88, 88);
-		numeracyMenu.add(divide);
-		divide.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/button_divide.png")));
-		divide.setBounds(324, frame.getHeight()/2-50, 88, 88);
-		numeracyMenu.add(equals);
-		equals.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/button_equals.png")));
-		equals.setBounds(422, frame.getHeight()/2-50, 88, 88);
-		//Text field
-    	textFieldIcon = new JLabel(new javax.swing.ImageIcon(getClass().getResource("/Assets/text input field.png")));
-    	textFieldIcon.setBounds(30, frame.getHeight()/2-150, 482, 89);
-		number.setBounds(50, frame.getHeight()/2-150, 442, 89);
-		number.setHorizontalAlignment(SwingConstants.CENTER);
-		numeracyMenu.add(number);
-    	numeracyMenu.add(textFieldIcon);
-		buttonHomeNumeracy.setBounds(frame.getHeight() / 30, frame.getHeight() / 30, 69, 68);
-		//Media
-		//media = new Media("/Assets.Videos/wellington.mp4")
-		// Background
-		numeracyMenu.setBackground(Color.WHITE);
+		buttonHomeNumber = makeButton(null, 0, 0, width / 8, height / 8);
+		buttonExercisesNumber = makeButton("Exercises", 0, height / 4 * 3, width / 4, height / 4);
+		button0_20 = makeButton("0 - 20", width / 8, height / 8, width / 4, height / 8);
+		button0_20.setFont(new Font("EBRIMA", Font.BOLD, 42));
+		button10_100 = makeButton("10 - 100", width / 8, height / 4, width / 4, height / 8);
+		button10_100.setFont(new Font("EBRIMA", Font.BOLD, 42));
+		add = makeButton(null, width / 8, height / 8 * 3, width / 8, height / 8);
+		subtract = makeButton(null, width / 4, height / 8 * 3, width / 8, height / 8);
+		multiply = makeButton(null, width / 8, height / 2, width / 8, height / 8);
+		divide = makeButton(null, width / 4, height / 2, width / 8, height / 8);
+		equals = makeButton(null, width / 4, height / 8 * 5, width / 8, height / 8);
+		numberMenu.add(buttonHomeNumber);
+		numberMenu.add(buttonExercisesNumber);
+		numberMenu.add(button0_20);
+		numberMenu.add(button10_100);
+		numberMenu.add(add);
+		numberMenu.add(subtract);
+		numberMenu.add(multiply);
+		numberMenu.add(divide);
+		numberMenu.add(equals);
 		// Button functionality
-		buttonHomeNumeracy.addActionListener(new ActionListener() {
+		buttonHomeNumber.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(panelCont, "baseMenu");
 			}
-		});		
-		buttonExercisesNumeracy.addActionListener(new ActionListener() {
+		});
+		buttonExercisesNumber.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0){
+			public void actionPerformed(ActionEvent arg0) {
 				cl.show(panelCont, "exerciseMenu");
 			}
-		});		
+		});
+		button0_20.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("Display '0 - 20' video.");
+			}
+		});
+		button10_100.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("Display '10 - 100' video.");
+			}
+		});
 		add.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0){
+			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Display 'add' video.");
 			}
-		});	
+		});
 		subtract.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0){
+			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Display 'subtract' video.");
 			}
-		});	
+		});
 		multiply.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0){
+			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Display 'multiply' video.");
 			}
-		});	
+		});
 		divide.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0){
+			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Display 'divide' video.");
 			}
-		});	
+		});
 		equals.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0){
+			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Display 'equals' video.");
 			}
-		});	
+		});
+		drawNumber drawObject = new drawNumber();
+		drawObject.setBounds(0, 0, width, height);
+		numberMenu.add(drawObject);
 	}
-	
-	//Makes the Exercises menu panel
-	private void createExerciseMenu(){
-		//Layout
+
+	// Makes the Exercises menu panel
+	private void createExerciseMenu() {
+		// Layout
 		exerciseMenu.setLayout(null);
-		//Title
-		exerciseTitleIcon = new JLabel(new javax.swing.ImageIcon(getClass().getResource("/Assets/Title - Exercises.png")));
+		width = frame.getWidth();
+		height = frame.getHeight();
+		// Title
+		exerciseTitleIcon = new JLabel(
+				new javax.swing.ImageIcon(getClass().getResource("/Assets/title_exercises.png")));
 		exerciseMenu.add(exerciseTitleIcon);
-		exerciseTitleIcon.setBounds(frame.getWidth()/2-290, frame.getHeight()/30, 580, 90);
-		//Buttons
+		exerciseTitleIcon.setBounds(width / 2 - 300, 0, 600, 100);
+		// Buttons
+		buttonHomeExercises = makeButton(null, 0, 0, width / 8, height / 8);
 		exerciseMenu.add(buttonHomeExercises);
-		buttonHomeExercises.setBounds(frame.getHeight()/30, frame.getHeight()/30, 69, 68);
-		//Background
-		exerciseMenu.setBackground(Color.WHITE);
-		//Button functionality
+		buttonHelpExercises = makeButton(null, width / 8 * 7, 0, width / 8, height / 8);
+		exerciseMenu.add(buttonHelpExercises);
+		// Help dialogue
+		ImageIcon ii = new javax.swing.ImageIcon(getClass().getResource("/Assets/exercises_explanation.png"));
+		exerciseHelp = getScaledImage(ii.getImage(), width / 4 * 3 - 9, height / 4 * 3 - 6);
+		ImageIcon sh = new ImageIcon(exerciseHelp);
+		exerciseHelpDialogue = new JLabel(sh);
+		exerciseMenu.add(exerciseHelpDialogue);
+		exerciseHelpDialogue.setBounds(width / 8 - 1, height / 8, width / 4 * 3, height / 4 * 3);
+		exerciseHelpDialogue.setVisible(exerciseHelpVisible);
+		// Button functionality
 		buttonHomeExercises.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0){
+			public void actionPerformed(ActionEvent arg0) {
 				cl.show(panelCont, "baseMenu");
 			}
 		});
 		buttonHelpExercises.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0){
-				if(!helpVisible){
-					helpDialogue.setVisible(true);
-					helpVisible = true;
-				}
-				else{
-					helpDialogue.setVisible(false);
-					helpVisible = false;
+			public void actionPerformed(ActionEvent arg0) {
+				if (!exerciseHelpVisible) {
+					exerciseHelpDialogue.setVisible(true);
+					exerciseHelpVisible = true;
+				} else {
+					exerciseHelpDialogue.setVisible(false);
+					exerciseHelpVisible = false;
 				}
 			}
 		});
+		drawExercises drawObject = new drawExercises();
+		drawObject.setBounds(0, 0, width, height);
+		exerciseMenu.add(drawObject);
 	}
 
 	// Makes the Search by Sign menu panel
 	private void createSearchMenu() {
 		// Layout
 		searchMenu.setLayout(null);
+		width = frame.getWidth();
+		height = frame.getHeight();
 		// Title
-		searchTitleIcon = new JLabel(new javax.swing.ImageIcon(getClass()
-				.getResource("/Assets/Title - Search by Sign.png")));
+		searchTitleIcon = new JLabel(new javax.swing.ImageIcon(getClass().getResource("/Assets/title_search.png")));
 		searchMenu.add(searchTitleIcon);
-		searchTitleIcon.setBounds(frame.getWidth() / 2 - 290,
-				frame.getHeight() / 30, 580, 90);
+		searchTitleIcon.setBounds(width / 2 - 300, 0, 600, 100);
 		// Buttons
+		buttonHomeSearch = makeButton(null, 0, 0, width / 8, height / 8);
+		buttonHelpSearch = makeButton(null, width / 8 * 7, 0, width / 8 + 10, height / 8);
 		searchMenu.add(buttonHomeSearch);
-		buttonHomeSearch.setBounds(frame.getHeight() / 30,
-				frame.getHeight() / 30, 69, 68);
 		searchMenu.add(buttonHelpSearch);
-		buttonHelpSearch.setBounds(frame.getWidth() - (frame.getWidth() / 30)
-				- 84, frame.getHeight() / 30, 84, 68);
 		// Help dialogue
-		helpDialogue = new JLabel(new javax.swing.ImageIcon(getClass()
-				.getResource("/Assets/SbS explanation.png")));
-		searchMenu.add(helpDialogue);
-		helpDialogue.setBounds(frame.getWidth() / 2 - 430,
-				frame.getHeight() / 2 - 187, 860, 374);
-		helpDialogue.setVisible(helpVisible);
+		ImageIcon ii = new javax.swing.ImageIcon(getClass().getResource("/Assets/sbs_explanation.png"));
+		searchHelp = getScaledImage(ii.getImage(), width / 4 * 3 - 9, height / 4 * 3 - 6);
+		ImageIcon sh = new ImageIcon(searchHelp);
+		searchHelpDialogue = new JLabel(sh);
+		searchMenu.add(searchHelpDialogue);
+		searchHelpDialogue.setBounds(width / 8 - 1, height / 8, width / 4 * 3, height / 4 * 3);
+		searchHelpDialogue.setVisible(searchHelpVisible);
 		// Combobox
 		searchMenu.add(refine);
-		refine.setBounds(30, frame.getHeight() / 2 - 100, 200, 200);
+		refine.setBounds(width / 8 + ((width / 4) - 200) / 2, height / 8 * 3 + ((height / 8 * 3) - 200) / 2, 200, 200);
 		refineValue = refine.getSelectedIndex();
 		// Console
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		leapConsole.setBorder(border);
 		sp = new JScrollPane(leapConsole);
-		sp.setBounds(frame.getWidth() / 4, frame.getHeight() / 4, 900, 400);
+		sp.setBounds(width / 8 * 3 + 50, height / 4 + 50, width / 2 - 100, height / 8 * 5 - 100);
 		searchMenu.add(sp);
-		// Background
-		searchMenu.setBackground(Color.WHITE);
 		// Button functionality
 		buttonHomeSearch.addActionListener(new ActionListener() {
 			@Override
@@ -457,24 +449,26 @@ public class GUIv2 {
 		buttonHelpSearch.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (!helpVisible) {
-					helpDialogue.setVisible(true);
-					helpVisible = true;
+				if (!searchHelpVisible) {
+					searchHelpDialogue.setVisible(true);
+					searchHelpVisible = true;
 				} else {
-					helpDialogue.setVisible(false);
-					helpVisible = false;
+					searchHelpDialogue.setVisible(false);
+					searchHelpVisible = false;
 				}
 			}
 		});
 		log("Search by sign initialisation complete");
 		log("Welcome");
 		log("");
-		
+		drawSearch drawObject = new drawSearch();
+		drawObject.setBounds(0, 0, width, height);
+		searchMenu.add(drawObject);
 	}
-	
-	public static void log(String message){
+
+	public static void log(String message) {
 		leapConsole.append(message);
 		JScrollBar vertical = sp.getVerticalScrollBar();
-		vertical.setValue( vertical.getMaximum() );
+		vertical.setValue(vertical.getMaximum());
 	}
 }
