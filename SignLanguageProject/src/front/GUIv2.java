@@ -108,9 +108,6 @@ public class GUIv2 {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		createBaseMenu();
-		createNumberMenu();
-		createExerciseMenu();
-		createSearchMenu();
 
 		panelCont.add(baseMenu, "baseMenu");
 		panelCont.add(numberMenu, "numberMenu");
@@ -127,13 +124,9 @@ public class GUIv2 {
 		JButton jb = new JButton(name);
 		jb.setLocation(xPos, yPos);
 		jb.setSize(wid, hei);
-		jb.setHorizontalTextPosition(JButton.CENTER);
-		jb.setVerticalTextPosition(JButton.CENTER);
 		jb.setBorderPainted(false);
 		jb.setFocusPainted(false);
 		jb.setContentAreaFilled(false);
-		jb.setForeground(new Color(31, 27, 39, 255));
-		jb.setFont(new Font("VANI", Font.BOLD, 48));
 		return jb;
 	}
 
@@ -170,21 +163,16 @@ public class GUIv2 {
 	}
 
 	// Makes the main menu panel
-	private void createBaseMenu() {
+	public void createBaseMenu() {
 		// Layout
 		baseMenu.setLayout(null);
 		width = frame.getWidth();
 		height = frame.getHeight();
-		// Title
-		titleIcon = new JLabel(new javax.swing.ImageIcon(getClass().getResource("/Assets/title_block_v4.png")));
-		baseMenu.add(titleIcon);
-		titleIcon.setBounds(width / 2 - 288, 50, 576, 200);
 		// Buttons
-		buttonNumber = makeButton("Number", width / 4, height / 8 * 5, width / 4, height / 4);
-		buttonExercises = makeButton("Exercises", width / 2, height / 8 * 5, width / 4, height / 4);
-		buttonSearch = makeButton("Search by Sign", 0, height / 8, width / 4, height / 2);
-		buttonSearch.setText("<html><center>Search<br />by<br />Sign</html>");
-		buttonExit = makeButton("Exit", width / 4 * 3, height / 2, width / 4, height / 4);
+		buttonNumber = makeButton(null, width / 4, height / 8 * 5, width / 4, height / 4);
+		buttonExercises = makeButton(null, width / 2, height / 8 * 5, width / 4, height / 4);
+		buttonSearch = makeButton(null, 0, height / 8, width / 4, height / 2);
+		buttonExit = makeButton(null, width / 4 * 3, height / 2, width / 4, height / 4);
 		baseMenu.add(buttonNumber);
 		baseMenu.add(buttonExercises);
 		baseMenu.add(buttonSearch);
@@ -193,18 +181,23 @@ public class GUIv2 {
 		buttonNumber.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				createNumberMenu();
 				cl.show(panelCont, "numberMenu");
+				baseMenu.removeAll();
 			}
 		});
 		buttonExercises.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				createExerciseMenu();
 				cl.show(panelCont, "exerciseMenu");
+				baseMenu.removeAll();
 			}
 		});
 		buttonSearch.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				createSearchMenu();
 				cl.show(panelCont, "searchMenu");
 
 				// start using leap
@@ -218,6 +211,7 @@ public class GUIv2 {
 				};
 				t.start();
 				System.out.println("Past thread start");
+				baseMenu.removeAll();
 
 			}
 		});
@@ -238,17 +232,11 @@ public class GUIv2 {
 		numberMenu.setLayout(null);
 		width = frame.getWidth();
 		height = frame.getHeight();
-		// Title
-		numberTitleIcon = new JLabel(new javax.swing.ImageIcon(getClass().getResource("/Assets/title_number.png")));
-		numberMenu.add(numberTitleIcon);
-		numberTitleIcon.setBounds(width / 2 - 300, 0, 600, 100);
 		// Buttons
 		buttonHomeNumber = makeButton(null, 0, 0, width / 8, height / 8);
-		buttonExercisesNumber = makeButton("Exercises", 0, height / 4 * 3, width / 4, height / 4);
-		button0_20 = makeButton("0 - 20", width / 8, height / 8, width / 4, height / 8);
-		button0_20.setFont(new Font("EBRIMA", Font.BOLD, 42));
-		button10_100 = makeButton("10 - 100", width / 8, height / 4, width / 4, height / 8);
-		button10_100.setFont(new Font("EBRIMA", Font.BOLD, 42));
+		buttonExercisesNumber = makeButton(null, 0, height / 4 * 3, width / 4, height / 4);
+		button0_20 = makeButton(null, width / 8, height / 8, width / 4, height / 8);
+		button10_100 = makeButton(null, width / 8, height / 4, width / 4, height / 8);
 		add = makeButton(null, width / 8, height / 8 * 3, width / 8, height / 8);
 		subtract = makeButton(null, width / 4, height / 8 * 3, width / 8, height / 8);
 		multiply = makeButton(null, width / 8, height / 2, width / 8, height / 8);
@@ -267,13 +255,17 @@ public class GUIv2 {
 		buttonHomeNumber.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				createBaseMenu();
 				cl.show(panelCont, "baseMenu");
+				numberMenu.removeAll();
 			}
 		});
 		buttonExercisesNumber.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				createExerciseMenu();
 				cl.show(panelCont, "exerciseMenu");
+				numberMenu.removeAll();
 			}
 		});
 		button0_20.addActionListener(new ActionListener() {
@@ -318,7 +310,7 @@ public class GUIv2 {
 				System.out.println("Display 'equals' video.");
 			}
 		});
-		drawNumber drawObject = new drawNumber();
+		drawNumber drawObject = new drawNumber(width, height);
 		drawObject.setBounds(0, 0, width, height);
 		numberMenu.add(drawObject);
 	}
@@ -329,44 +321,19 @@ public class GUIv2 {
 		exerciseMenu.setLayout(null);
 		width = frame.getWidth();
 		height = frame.getHeight();
-		// Title
-		exerciseTitleIcon = new JLabel(
-				new javax.swing.ImageIcon(getClass().getResource("/Assets/title_exercises.png")));
-		exerciseMenu.add(exerciseTitleIcon);
-		exerciseTitleIcon.setBounds(width / 2 - 300, 0, 600, 100);
 		// Buttons
 		buttonHomeExercises = makeButton(null, 0, 0, width / 8, height / 8);
 		exerciseMenu.add(buttonHomeExercises);
-		buttonHelpExercises = makeButton(null, width / 8 * 7, 0, width / 8, height / 8);
-		exerciseMenu.add(buttonHelpExercises);
-		// Help dialogue
-		ImageIcon ii = new javax.swing.ImageIcon(getClass().getResource("/Assets/exercises_explanation.png"));
-		exerciseHelp = getScaledImage(ii.getImage(), width / 4 * 3 - 9, height / 4 * 3 - 6);
-		ImageIcon sh = new ImageIcon(exerciseHelp);
-		exerciseHelpDialogue = new JLabel(sh);
-		exerciseMenu.add(exerciseHelpDialogue);
-		exerciseHelpDialogue.setBounds(width / 8 - 1, height / 8, width / 4 * 3, height / 4 * 3);
-		exerciseHelpDialogue.setVisible(exerciseHelpVisible);
 		// Button functionality
 		buttonHomeExercises.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				createBaseMenu();
 				cl.show(panelCont, "baseMenu");
+				exerciseMenu.removeAll();
 			}
 		});
-		buttonHelpExercises.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if (!exerciseHelpVisible) {
-					exerciseHelpDialogue.setVisible(true);
-					exerciseHelpVisible = true;
-				} else {
-					exerciseHelpDialogue.setVisible(false);
-					exerciseHelpVisible = false;
-				}
-			}
-		});
-		drawExercises drawObject = new drawExercises();
+		drawExercises drawObject = new drawExercises(width, height);
 		drawObject.setBounds(0, 0, width, height);
 		exerciseMenu.add(drawObject);
 	}
@@ -377,27 +344,9 @@ public class GUIv2 {
 		searchMenu.setLayout(null);
 		width = frame.getWidth();
 		height = frame.getHeight();
-		// Title
-		searchTitleIcon = new JLabel(new javax.swing.ImageIcon(getClass().getResource("/Assets/title_search.png")));
-		searchMenu.add(searchTitleIcon);
-		searchTitleIcon.setBounds(width / 2 - 300, 0, 600, 100);
 		// Buttons
 		buttonHomeSearch = makeButton(null, 0, 0, width / 8, height / 8);
-		buttonHelpSearch = makeButton(null, width / 8 * 7, 0, width / 8 + 10, height / 8);
 		searchMenu.add(buttonHomeSearch);
-		searchMenu.add(buttonHelpSearch);
-		// Help dialogue
-		ImageIcon ii = new javax.swing.ImageIcon(getClass().getResource("/Assets/sbs_explanation.png"));
-		searchHelp = getScaledImage(ii.getImage(), width / 4 * 3 - 9, height / 4 * 3 - 6);
-		ImageIcon sh = new ImageIcon(searchHelp);
-		searchHelpDialogue = new JLabel(sh);
-		searchMenu.add(searchHelpDialogue);
-		searchHelpDialogue.setBounds(width / 8 - 1, height / 8, width / 4 * 3, height / 4 * 3);
-		searchHelpDialogue.setVisible(searchHelpVisible);
-		// Combobox
-		searchMenu.add(refine);
-		refine.setBounds(width / 8 + ((width / 4) - 200) / 2, height / 8 * 3 + ((height / 8 * 3) - 200) / 2, 200, 200);
-		refineValue = refine.getSelectedIndex();
 		// Console
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		leapConsole.setBorder(border);
@@ -408,25 +357,15 @@ public class GUIv2 {
 		buttonHomeSearch.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				createBaseMenu();
 				cl.show(panelCont, "baseMenu");
-			}
-		});
-		buttonHelpSearch.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if (!searchHelpVisible) {
-					searchHelpDialogue.setVisible(true);
-					searchHelpVisible = true;
-				} else {
-					searchHelpDialogue.setVisible(false);
-					searchHelpVisible = false;
-				}
+				searchMenu.removeAll();
 			}
 		});
 		log("Search by sign initialisation complete");
 		log("Welcome");
 		log("");
-		drawSearch drawObject = new drawSearch();
+		drawSearch drawObject = new drawSearch(width, height);
 		drawObject.setBounds(0, 0, width, height);
 		searchMenu.add(drawObject);
 	}
