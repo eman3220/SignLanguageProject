@@ -6,6 +6,8 @@ import front.GUIv2;
 
 public class SG_C extends SignGesture{
 
+	//private String path = "src/Assets/handshapes..."
+
 	@Override
 	public boolean matchesCondition(String[] handData) {
 		float sphere_diameter = Float.parseFloat(handData[0]);

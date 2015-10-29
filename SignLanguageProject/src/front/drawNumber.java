@@ -2,6 +2,9 @@ package front;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import tests.Test_Player;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +15,8 @@ import java.io.IOException;
 public class drawNumber extends JPanel implements ActionListener {
 
 	private BufferedImage bg, boxLB, boxGB, boxDB, add, sub, mlt, div, eql, back, title;
+
+	public static String videopath;
 
 	Color offWhite = new Color(249, 241, 252, 255);
 	Color lightBlue = new Color(211, 219, 219, 255);
@@ -107,6 +112,21 @@ public class drawNumber extends JPanel implements ActionListener {
 		if (timer < 400) {
 			tm.start();
 		}
+
+		if (timer < 1000) {
+			//System.out.println("TIMER");
+			if (!Test_Player.working) {
+
+				if(videopath != null){
+					Test_Player.working = true;
+					Test_Player.initialise();
+					Test_Player.showVideo((int) width / 2 - (width/20),
+							height / 4, width / 3 + 280,
+							height / 8 * 5 - 150,
+							videopath);
+				}
+			}
+		}
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -156,10 +176,10 @@ public class drawNumber extends JPanel implements ActionListener {
 			erY -= lerp((float) 0.1, (float) 2.0, (float) (erY - height / 4 * 3) / 200);
 
 		if(timer < 400) timer += 1;
-		
+
 		repaint();
 	}
-	
+
 	float lerp(float a, float b, float f)
 	{
 	    return a + f * (b - a);

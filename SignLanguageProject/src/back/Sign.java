@@ -1,13 +1,17 @@
 package back;
 
+import java.awt.Component;
+import java.awt.Image;
 import java.io.File;
+
+import javax.swing.ImageIcon;
 
 public class Sign {
 	private String id;
 	private String name;
 	private String position;
 	private File[] assets;
-	
+
 	public Sign(String id, String name, String position, File[] assets) {
 		super();
 		this.id = id;
@@ -39,6 +43,10 @@ public class Sign {
 	public void setAssets(File[] assets) {
 		this.assets = assets;
 	}
-	
-	
+	public Image getImage() {
+		Image i = new ImageIcon(this.assets[0].getAbsolutePath()).getImage();
+		return i;
+	}
+
+
 }

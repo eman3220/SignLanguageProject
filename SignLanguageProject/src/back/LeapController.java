@@ -17,6 +17,8 @@ import com.leapmotion.leap.Listener;
 import com.leapmotion.leap.Vector;
 
 import front.GUIv2;
+import front.drawExercises;
+import front.drawSearch;
 
 public class LeapController {
 
@@ -32,7 +34,7 @@ public class LeapController {
 //		controller.addListener(listener);
 //
 //		// Keep this process running until Enter is pressed
-//		// System.out.println("Press Enter to quit...");
+//		// //System.out.println("Press Enter to quit...");
 //		try {
 //			System.in.read();
 //		} catch (IOException e) {
@@ -72,16 +74,21 @@ public class LeapController {
 		controller.removeListener(listener);
 	}
 
+	public static void stopLeap() {
+		// Have the sample listener receive events from the controller
+				controller.addListener(listener);
+	}
+
 }
 
 class LeapListener extends Listener {
 
 	public void onConnect(Controller controller) {
-		// System.out.println("Connected");
+		// //System.out.println("Connected");
 	}
 
 	public void onFrame(Controller controller) {
-		// System.out.println("Frame available");
+		//System.out.println("Frame available");
 
 		Frame frame = controller.frame();
 
@@ -99,10 +106,10 @@ class LeapListener extends Listener {
 
 		// get the sphere diameter of the hand
 		Vector sphere_center = hand.sphereCenter();
-		// System.out.println("This is the sphere center vector:" +
+		// //System.out.println("This is the sphere center vector:" +
 		// sphere_center);
 		float sphere_diameter = 2 * hand.sphereRadius();
-		// System.out.println("This is the sphere diameter value:"
+		// //System.out.println("This is the sphere diameter value:"
 		// + sphere_diameter);
 		handInfo[0] = sphere_diameter + "";
 
@@ -112,6 +119,8 @@ class LeapListener extends Listener {
 		// initialize stringbuilders
 		StringBuilder fingersPresent = new StringBuilder();
 		StringBuilder fingersSpaced = new StringBuilder();
+
+		////System.out.println("HELLO?");
 
 		for (int i = 0; i < fingers.count(); i++) {
 			Finger finger = fingers.get(i);
@@ -134,33 +143,33 @@ class LeapListener extends Listener {
 
 				// get distance
 				double distance = getDistanceBetween(currentVector, nextVector);
-				// System.out.println("Distance between: "+distance);
+				// //System.out.println("Distance between: "+distance);
 
 				// establish threshold
-				//System.out.println("Establish threshold");
+				////System.out.println("Establish threshold");
 				if (nextFinger.type().toString().equals("TYPE_INDEX")) {
-					// System.out.println("Looking at index");
+					// //System.out.println("Looking at index");
 					if (distance < 70) {
 						fingersSpaced.append("0");
 					} else {
 						fingersSpaced.append("1");
 					}
 				} else if (nextFinger.type().toString().equals("TYPE_MIDDLE")) {
-					// System.out.println("Looking at middle");
+					// //System.out.println("Looking at middle");
 					if (distance < 25) {
 						fingersSpaced.append("0");
 					} else {
 						fingersSpaced.append("1");
 					}
 				} else if (nextFinger.type().toString().equals("TYPE_RING")) {
-					// System.out.println("Looking at ring");
+					// //System.out.println("Looking at ring");
 					if (distance < 25) {
 						fingersSpaced.append("0");
 					} else {
 						fingersSpaced.append("1");
 					}
 				} else if (nextFinger.type().toString().equals("TYPE_PINKY")) {
-					// System.out.println("Looking at pinky");
+					// //System.out.println("Looking at pinky");
 					if (distance < 35) {
 						fingersSpaced.append("0");
 					} else {
@@ -172,80 +181,20 @@ class LeapListener extends Listener {
 			}
 		}
 
-		// set GUI indicator thing
-		// extension
-
-//		char t = fingersPresent.charAt(0);
-//		if (t == '1') {
-//			GUIv2.THUMB.setForeground(Color.RED);
-//		} else {
-//			GUIv2.THUMB.setForeground(Color.BLACK);
-//		}
-//
-//		char i = fingersPresent.charAt(1);
-//		if (i == '1') {
-//			GUIv2.INDEX.setForeground(Color.RED);
-//		} else {
-//			GUIv2.INDEX.setForeground(Color.BLACK);
-//		}
-//
-//		char m = fingersPresent.charAt(2);
-//		if (m == '1') {
-//			GUIv2.MIDDLE.setForeground(Color.RED);
-//		} else {
-//			GUIv2.MIDDLE.setForeground(Color.BLACK);
-//		}
-//		char r = fingersPresent.charAt(3);
-//		if (r == '1') {
-//			GUIv2.RING.setForeground(Color.RED);
-//		} else {
-//			GUIv2.RING.setForeground(Color.BLACK);
-//		}
-//		char p = fingersPresent.charAt(4);
-//		if (p == '1') {
-//			GUIv2.PINKY.setForeground(Color.RED);
-//		} else {
-//			GUIv2.PINKY.setForeground(Color.BLACK);
-//		}
-//
-//		// spacing
-//		char t_i = fingersSpaced.charAt(0);
-//		if (t_i == '1') {
-//			GUIv2.T_I.setForeground(Color.RED);
-//		} else {
-//			GUIv2.T_I.setForeground(Color.BLACK);
-//		}
-//
-//		char i_m = fingersSpaced.charAt(1);
-//		if (i_m == '1') {
-//			GUIv2.I_M.setForeground(Color.RED);
-//		} else {
-//			GUIv2.I_M.setForeground(Color.BLACK);
-//		}
-//
-//		char m_r = fingersSpaced.charAt(2);
-//		if (m_r == '1') {
-//			GUIv2.M_R.setForeground(Color.RED);
-//		} else {
-//			GUIv2.M_R.setForeground(Color.BLACK);
-//		}
-//		char r_p = fingersSpaced.charAt(3);
-//		if (r_p == '1') {
-//			GUIv2.R_P.setForeground(Color.RED);
-//		} else {
-//			GUIv2.R_P.setForeground(Color.BLACK);
-//		}
+		////System.out.println("Loop end");
 
 		// set data
 		handInfo[0] = sphere_diameter + "";
 		handInfo[1] = fingersPresent.toString();
 		handInfo[2] = fingersSpaced.toString();
-		// System.out.println("Finger spacing: "+fingersSpaced.toString());
+		// //System.out.println("Finger spacing: "+fingersSpaced.toString());
 		// classification
-		// System.out.println("Classifying");
+		// //System.out.println("Classifying");
 
-		GUIv2.log(handInfo[1] + " ");
-		GUIv2.log(handInfo[2] + " ");
+		////System.out.println(handInfo[1] + " ");
+		////System.out.println(handInfo[2] + " ");
+
+
 
 		SG_zero_v1 zero_v1 = (SG_zero_v1) SignLanguageProject_Main.signGestures
 				.get(0);
@@ -292,43 +241,123 @@ class LeapListener extends Listener {
 		SG_connectedIndexMiddle connectedIndexMiddle = (SG_connectedIndexMiddle) SignLanguageProject_Main.signGestures
 				.get(14);
 
+		////System.out.println("Got here");
+
 		if (letterC.matchesCondition(handInfo)) {
-			GUIv2.log("This is the C gesture");
+			//GUIv2.log("This is the C gesture");
+
+
+			SignLanguageProject_Main.selected = (SignGesture)letterC;
+
+
+			drawSearch.hand = 4;
+			drawExercises.hand = 4;
+
 		} else if (connectedHand.matchesCondition(handInfo)) {
-			GUIv2.log("This is the birthday gesture");
+			//System.out.println("This is the birthday gesture");
+			SignLanguageProject_Main.selected = (SignGesture) connectedHand;
+			drawSearch.hand = 11;
+			drawExercises.hand = 11;
 		} else if (connectedIndexMiddle.matchesCondition(handInfo)) {
-			GUIv2.log("This is the father gesture");
+			//System.out.println("This is the father gesture");
+			SignLanguageProject_Main.selected = (SignGesture) connectedIndexMiddle;
+
+			drawSearch.hand = 6;
+			drawExercises.hand = 6;
+
 		} else if (one.matchesCondition(handInfo)) {
-			GUIv2.log("This is the 1 gesture");
+			//System.out.println("This is the 1 gesture");
+			SignLanguageProject_Main.selected = (SignGesture)one;
+			drawSearch.hand = 1;
+			drawExercises.hand = 1;
+
 		} else if (two.matchesCondition(handInfo)) {
-			GUIv2.log("This is the 2 gesture");
+			//System.out.println("This is the 2 gesture");
+			SignLanguageProject_Main.selected = (SignGesture)two;
+
+			drawSearch.hand = 7;
+			drawExercises.hand = 7;
+
 		} else if (three_v1.matchesCondition(handInfo)) {
-			GUIv2.log("This is the 3v1 gesture");
+			//System.out.println("This is the 3v1 gesture");
+			SignLanguageProject_Main.selected = (SignGesture)three_v1;
+
+			drawSearch.hand = 9;
+			drawExercises.hand = 9;
 		} else if (three_v2.matchesCondition(handInfo)) {
-			GUIv2.log("This is the 3v2 gesture");
+			//System.out.println("This is the 3v2 gesture");
+			SignLanguageProject_Main.selected = (SignGesture)three_v2;
+
+
+			drawSearch.hand = 3;
+			drawSearch.hand = 5;
+			drawExercises.hand = 5;
+
 		} else if (three_v3.matchesCondition(handInfo)) {
-			GUIv2.log("This is the 3v3 gesture");
+			//System.out.println("This is the 3v3 gesture");
+			SignLanguageProject_Main.selected = (SignGesture)three_v3;
+
+
+
 		} else if (four.matchesCondition(handInfo)) {
-			GUIv2.log("This is the 4 gesture");
+			//System.out.println("This is the 4 gesture");
+			SignLanguageProject_Main.selected = (SignGesture)four;
+
+
+			drawSearch.hand = 14;
+			drawExercises.hand = 14;
+
 		} else if (five.matchesCondition(handInfo)) {
-			GUIv2.log("This is the 5 gesture");
+			//System.out.println("This is the 5 gesture");
+			SignLanguageProject_Main.selected = (SignGesture)five;
+
+			// correct
+			drawSearch.hand = 2;
+			drawExercises.hand = 2;
+
 		} else if (six.matchesCondition(handInfo)) {
-			GUIv2.log("This is the 6 gesture");
+			//System.out.println("This is the 6 gesture");
+			SignLanguageProject_Main.selected = (SignGesture)six;
+
+
+
+			drawSearch.hand = 8;
+			drawExercises.hand = 8;
 		} else if (seven.matchesCondition(handInfo)) {
-			GUIv2.log("This is the 7 gesture");
+			//System.out.println("This is the 7 gesture");
+			SignLanguageProject_Main.selected = (SignGesture)seven;
+
+			drawSearch.hand = 12;
+			drawExercises.hand = 12;
+
+
 		} else if (nine.matchesCondition(handInfo)) {
-			GUIv2.log("This is the 9 gesture");
+			//System.out.println("This is the 9 gesture");
+			SignLanguageProject_Main.selected = (SignGesture)nine;
+
+
+
 		} else if (zero_v1.matchesCondition(handInfo)) {
-			GUIv2.log("This is the 0v1 gesture");
+			//System.out.println("This is the 0v1 gesture");
+			//SignLanguageProject_Main.selected = (SignGesture)
+
+			drawSearch.hand = 10;
+
+			drawSearch.hand = 13;
+			drawSearch.hand = 0;
+			drawExercises.hand = 0;
 		} else if (zero_v2.matchesCondition(handInfo)) {
-			GUIv2.log("This is the 0v2 gesture");
+			//System.out.println("This is the 0v2 gesture");
+			//SignLanguageProject_Main.selected = (SignGesture)
+
+
+			drawSearch.hand = 0;
+			drawExercises.hand = 0;
 		} else {
 			// unused
 		}
 
-		GUIv2.log("\n");
-
-		// System.out.println("end");
+		// //System.out.println("end");
 	}
 
 	private double getDistanceBetween(Vector currentVector, Vector nextVector) {

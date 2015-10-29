@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -17,6 +18,8 @@ import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
 
 public class Test_Player {
+
+	public static boolean working = false;
 
     public static void main(final String[] args) {
         NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), "C:\\Program Files\\VideoLAN\\VLC");
@@ -53,5 +56,44 @@ public class Test_Player {
 
 
         mediaPlayer.playMedia("wellington.mp4");
+    }
+
+    public static void initialise(){
+    	NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), "C:\\Program Files\\VideoLAN\\VLC");
+        Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
+
+    }
+
+    static JFrame toReturn;
+
+    public static void showVideo(int x, int y, int width, int height, String videofile){
+    	toReturn = new JFrame();
+    	MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
+
+        Canvas c = new Canvas();
+        c.setBackground(Color.black);
+        JPanel p = new JPanel();
+        p.setLayout(new BorderLayout());
+        p.add(c, BorderLayout.CENTER);
+        toReturn.add(p, BorderLayout.CENTER);
+
+
+        EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
+
+        mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(c));
+
+        toReturn.setLocation(x, y);
+        toReturn.setSize(width, height);
+        toReturn.setUndecorated(true);
+        toReturn.setVisible(true);
+
+        mediaPlayer.setRepeat(true);
+
+        mediaPlayer.playMedia(videofile);
+
+    }
+
+    public static void disposeFrame(){
+    	toReturn.dispose();
     }
 }

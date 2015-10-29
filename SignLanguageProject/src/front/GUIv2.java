@@ -34,6 +34,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
+import tests.Test_Player;
 import back.LeapController;
 import back.LeapTest02;
 
@@ -191,6 +192,17 @@ public class GUIv2 {
 			public void actionPerformed(ActionEvent arg0) {
 				createExerciseMenu();
 				cl.show(panelCont, "exerciseMenu");
+				// start using leap
+				Thread t = new Thread() {
+					@Override
+					public void run() {
+						//System.out.println("THREAD STARTED");
+						LeapController.initialise();
+						LeapController.classify();
+					}
+				};
+				t.start();
+				//System.out.println("Past thread start");
 				baseMenu.removeAll();
 			}
 		});
@@ -204,13 +216,13 @@ public class GUIv2 {
 				Thread t = new Thread() {
 					@Override
 					public void run() {
-						System.out.println("THREAD STARTED");
+						//System.out.println("THREAD STARTED");
 						LeapController.initialise();
 						LeapController.classify();
 					}
 				};
 				t.start();
-				System.out.println("Past thread start");
+				//System.out.println("Past thread start");
 				baseMenu.removeAll();
 
 			}
@@ -255,6 +267,12 @@ public class GUIv2 {
 		buttonHomeNumber.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				// close the video frame
+				Test_Player.disposeFrame();
+				// set boolean
+				Test_Player.working = false;
+
+
 				createBaseMenu();
 				cl.show(panelCont, "baseMenu");
 				numberMenu.removeAll();
@@ -263,6 +281,11 @@ public class GUIv2 {
 		buttonExercisesNumber.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				// close the video frame
+				Test_Player.disposeFrame();
+				// set boolean
+				Test_Player.working = false;
+
 				createExerciseMenu();
 				cl.show(panelCont, "exerciseMenu");
 				numberMenu.removeAll();
@@ -272,42 +295,77 @@ public class GUIv2 {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Display '0 - 20' video.");
+				if(Test_Player.working){
+					Test_Player.working = false;
+					Test_Player.disposeFrame();
+				}
+				drawNumber.videopath = "src/Assets/videos/counting_0_20.mp4";
 			}
 		});
 		button10_100.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Display '10 - 100' video.");
+				if(Test_Player.working){
+					Test_Player.working = false;
+					Test_Player.disposeFrame();
+				}
+				drawNumber.videopath = "src/Assets/videos/counting_10_100.mp4";
 			}
 		});
 		add.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Display 'add' video.");
+				if(Test_Player.working){
+					Test_Player.working = false;
+					Test_Player.disposeFrame();
+				}
+				drawNumber.videopath = "src/Assets/videos/operators_add.mp4";
 			}
 		});
 		subtract.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Display 'subtract' video.");
+				if(Test_Player.working){
+					Test_Player.working = false;
+					Test_Player.disposeFrame();
+				}
+				drawNumber.videopath = "src/Assets/videos/operators_subtract.mp4";
 			}
 		});
 		multiply.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Display 'multiply' video.");
+				if(Test_Player.working){
+					Test_Player.working = false;
+					Test_Player.disposeFrame();
+				}
+				drawNumber.videopath = "src/Assets/videos/operators_multiply.mp4";
 			}
 		});
 		divide.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Display 'divide' video.");
+				if(Test_Player.working){
+					Test_Player.working = false;
+					Test_Player.disposeFrame();
+				}
+				drawNumber.videopath = "src/Assets/videos/operators_divide.mp4";
 			}
 		});
 		equals.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Display 'equals' video.");
+				if(Test_Player.working){
+					Test_Player.working = false;
+					Test_Player.disposeFrame();
+				}
+				drawNumber.videopath = "src/Assets/videos/operators_equals.mp4";
 			}
 		});
 		drawNumber drawObject = new drawNumber(width, height);
@@ -328,6 +386,17 @@ public class GUIv2 {
 		buttonHomeExercises.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				// close the video frame
+				Test_Player.disposeFrame();
+				// set boolean
+				Test_Player.working = false;
+
+				//
+				drawExercises.correct = false;
+
+				// stop leap
+				LeapController.stopLeap();
+
 				createBaseMenu();
 				cl.show(panelCont, "baseMenu");
 				exerciseMenu.removeAll();
@@ -350,21 +419,29 @@ public class GUIv2 {
 		// Console
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		leapConsole.setBorder(border);
-		sp = new JScrollPane(leapConsole);
-		sp.setBounds(width / 8 * 3 + 50, height / 4 + 50, width / 2 - 100, height / 8 * 5 - 100);
-		searchMenu.add(sp);
+		// dont need leap console
+//		JPanel resultsPanel = new JPanel();
+//		resultsPanel.setBounds(width / 8 * 3 + 50, height / 4 + 50, width / 2 - 100, height / 8 * 5 - 100);
+//		resultsPanel.setBackground(Color.GREEN);
+//		sp = new JScrollPane(resultsPanel);
+//		sp.setBounds(width / 8 * 3 + 50, height / 4 + 50, width / 2 - 100, height / 8 * 5 - 100);
+//		searchMenu.add(sp);
 		// Button functionality
 		buttonHomeSearch.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				createBaseMenu();
+
+				// stop leap
+				LeapController.stopLeap();
+
 				cl.show(panelCont, "baseMenu");
 				searchMenu.removeAll();
 			}
 		});
-		log("Search by sign initialisation complete");
-		log("Welcome");
-		log("");
+//		log("Search by sign initialisation complete");
+//		log("Welcome");
+//		//log("");
 		drawSearch drawObject = new drawSearch(width, height);
 		drawObject.setBounds(0, 0, width, height);
 		searchMenu.add(drawObject);
