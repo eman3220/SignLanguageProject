@@ -94,6 +94,8 @@ public class Test_Player {
     }
 
     public static void disposeFrame(){
-    	toReturn.dispose();
+    	if(working){
+    		toReturn.dispose();
+    	}
     }
 }

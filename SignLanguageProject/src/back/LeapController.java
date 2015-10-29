@@ -90,6 +90,8 @@ class LeapListener extends Listener {
 	public void onFrame(Controller controller) {
 		//System.out.println("Frame available");
 
+		System.out.print("");
+
 		Frame frame = controller.frame();
 
 		// get all hands

@@ -100,9 +100,6 @@ public class drawExercises extends JPanel implements ActionListener {
 		width = this.getWidth();
 		height = this.getHeight();
 
-		if(correct){
-			return;
-		}
 
 		String hsFile = hList[hand].toString();
 		hsFile = hsFile.substring(22, 37);
@@ -138,6 +135,13 @@ public class drawExercises extends JPanel implements ActionListener {
 		if (displayHelp)
 			g.drawImage(helpDialogue, width / 8 + 3, height / 8 + 3,
 					width / 4 * 3 - 9, height / 4 * 3 - 6, null);
+
+		if(correct){
+			g.drawImage(correctImage, (int) (width / 12), (height / 3),
+					(width / 3), (height / 3) + 100, null);
+			return;
+		}
+
 
 		if (timer < 400) {
 			this.removeAll();
